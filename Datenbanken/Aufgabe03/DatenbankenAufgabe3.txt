@@ -1,0 +1,179 @@
+Aufgabenblatt 03 Datenbanken
+Julian Niethammer
+23.10.23
+
+Nr.1
+
+a)
+
+	CREATE TABLE Cities
+(
+    id        int generated always as identity primary key,
+    Name      varchar(255),
+    Land      varchar(255),
+    Einwohner int,
+    Flaeche   int,
+);
+
+	INSERT INTO Cities (Name, Land, Einwohner, Flaeche)
+	VALUES ('Augsburg', 'Deutschland', 300000, 146),
+       ('Oberndorf', 'Deutschland', 45684, 154),
+       ('Tokyo', 'Japan', 200, 20),
+       ('Washington', 'USA', 1165165, 12);
+	   
+	   
+b) Es funktioniert da ID sich automatisch erhöht
+
+Nr.2
+
+a)
+	ALTER TABLE Cities
+    ADD COLUMN laengengrad DECIMAL;
+
+	ALTER TABLE Cities
+    ADD COLUMN breitengrad DECIMAl;
+	
+	update cities 
+	set laengengrad = 89.2342
+	set breitengrad = 34.1422
+	where ID = 2;
+	
+	c) alter table attraktionen drop column beschreibung
+	
+d) create table Attraktionen(
+Id int generated always as identity primary key,
+name varchar(255),
+beschreibung varchar(255),
+stadt_id int
+)
+
+ALTER TABLE Attraktionen ADD CONSTRAINT referenz_stadt FOREIGN KEY (Stadt_id) references Staedte(id);
+	
+	Nr.3
+	
+	a-c)
+		create table reise(
+		id int generated always as identity primary key,
+		ziel varchar(20),
+		preis int check(preis >=50),
+		dauer int check(dauer >=0),
+		verkehrsmittel varchar(20),
+		anfangsdatum varchar(20)
+		)
+		
+		ALTER TABLE Reise
+		ADD CONSTRAINT reise_preis_groesser_50_pro_tag_constraint CHECK (preis / dauer >= 50);
+		
+		
+	d)
+	create table ziel(
+		id int generated always as identity primary key,
+		ziel_name varchar(255) unique
+		)
+		
+	create table verkehrsmittel(
+		id int generated always as identity primary key,
+		verkehrsmittel_name varchar(255) unique
+		)
+	
+	create table reise(
+		id int generated always as identity primary key,
+		ziel_id varchar(20) references ziel,
+		preis int,
+		dauer int,
+		verkehrsmittel_id int(20) references verkehrsmittel,
+		anfangsdatum varchar(20)
+		check(preis/dauer >= 50)
+		)
+		
+		
+	Nr.4
+	
+	a)
+	ALTER TABLE Titanic
+    ADD COLUMN id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY;
+		
+	b)
+	SELECT distinct embarked FROM TITANIC 
+	
+	null
+	C
+	Q
+	S
+	
+	SELECT distinct sibsp FROM TITANIC 
+	
+	0
+	1
+	2
+	3
+	4
+	5
+	8
+	
+	SELECT distinct parch FROM TITANIC 
+	
+	0
+	1
+	2
+	3
+	4
+	5
+	6
+	9
+	
+	
+	c)
+	ALTER TABLE Titanic
+    ADD CONSTRAINT age_constraint CHECK (age >= 0);
+	
+	ALTER TABLE Titanic
+    ADD CONSTRAINT embarked_constraint CHECK (embarked IN ('C', 'Q', 'S'));
+	
+	ALTER TABLE Titanic
+    ADD CONSTRAINT gender_constraint CHECK (gender IN ('male', 'female', 'diverse'));
+
+	ALTER TABLE Titanic
+    ADD CONSTRAINT parch_constraint CHECK (parch >= 0);
+
+	ALTER TABLE Titanic
+    ADD CONSTRAINT sibsp_constraint CHECK (sibsp >= 0);
+
+	ALTER TABLE TITANIC
+    ADD CONSTRAINT fare_constraint CHECK (fare >= 0);
+
+	ALTER TABLE TITANIC
+    ALTER COLUMN ticket VARCHAR(100) NOT NULL;
+
+	ALTER TABLE TITANIC
+    ALTER COLUMN name VARCHAR(100) NOT NULL;
+
+	ALTER TABLE TITANIC
+    ADD CONSTRAINT class_constraint CHECK (class IN (1, 2, 3));
+	
+	d)
+	create table embarkedCity(
+	id int generated always as identity primary key,
+	city varchar(255) unique
+	)
+	
+	e)
+	INSERT INTO embarkedCity(City)(SELECT DISTINCT embarked FROM Titanic)
+	
+	f)
+	ALTER TABLE embarkedCity
+    ADD COLUMN city_name VARCHAR(100) UNIQUE;
+	
+	g)
+	update embarkedcity
+	set city_name = 'Cherbourg'
+	where city = 'C'
+	
+	update embarkedcity
+	set city_name = 'Quennstown'
+	where city = 'Q'
+	
+	update embarkedcity
+	set city_name = 'Southhampton'
+	where city = 'S'
+
