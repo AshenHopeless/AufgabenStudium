@@ -1,0 +1,107 @@
+Aufgabenblatt 06 Datenbanken
+Julian Niethammer
+20.11.2023
+
+Nr.1
+a)
+	SELECT Name FROM TITANIC
+	WHERE Ticket = 'A/5. 3336';
+	
+	Lobb, Mr. William Arthur
+	Lobb, Mrs. William Arthur (Cordelia K Stanlick)
+	
+b)
+	SELECT * FROM TITANIC
+	WHERE sibsp = 0 and parch = 0
+	
+c)
+	SELECT distinct(class) FROM TITANIC
+	
+	Es gibt 3 Klassen
+	
+d)
+	SELECT name, fare FROM TITANIC
+	WHERE fare is null
+	
+	Storey, Mr. Thomas	
+	
+e)
+	SELECT name, fare FROM TITANIC
+	WHERE fare = 0
+	
+	Leonard, Mr. Lionel
+	Johnson, Mr. Alfred
+	Tornquist, Mr. William Henry
+	Reuchlin, Jonkheer. John George
+	Parr, Mr. William Henry Marsh
+	Watson, Mr. Ennis Hastings
+	Ismay, Mr. Joseph Bruce
+	Campbell, Mr. William
+	Fry, Mr. Richard
+	Cunningham, Mr. Alfred Fleming
+	Johnson, Mr. William Cahoone Jr
+	Harrison, Mr. William
+	Knight, Mr. Robert J
+	Frost, Mr. Anthony Wood "Archie"
+	Chisholm, Mr. Roderick Robert Crispin
+	Parkes, Mr. Francis "Frank"
+	Andrews, Mr. Thomas Jr
+	
+f)
+	SELECT ticket FROM TITANIC
+	WHERE name LIKE 'Astor, % John Jacob'
+	
+	Astor, Col. John Jacob, PC 17757
+	
+g)
+	SELECT name, ticket FROM TITANIC
+	WHERE ticket LIKE '% 17757'
+	
+	Astor, Col. John Jacob	PC 17757
+	Astor, Mrs. John Jacob (Madeleine Talmadge Force)	PC 17757
+	Bidois, Miss. Rosalie	PC 17757
+	Endres, Miss. Caroline Louise	PC 17757
+	Robbins, Mr. Victor	PC 17757
+	
+h)
+	SELECT name FROM TITANIC
+	WHERE boat is null and survived = '1'
+
+	23 Überlebende ohne Boot
+	
+i)
+	SELECT name, boat, body FROM TITANIC
+	WHERE boat is not null and survived = '0'
+	
+	9 Tote trotz Boot
+	
+j)
+	SELECT name FROM TITANIC
+	WHERE name not like '%Mr.%' and name not like '%Master.%' and gender = 'male'
+	
+	491 Einträge
+	
+k)
+	SELECT distinct(boat) FROM TITANIC 
+	
+	Einträge scheinen sich zu überschneiden
+	
+l)
+	SELECT name, home FROM TITANIC 
+	WHERE home like '%DE'
+	
+	Rugg, Miss. Emily	Guernsey / Wilmington, DE
+	
+m)
+	SELECT name, age, gender FROM TITANIC 
+	WHERE age between 10 and 16 and gender = 'female'
+	
+	25 Einträge
+	
+n)
+	SELECT ticket FROM TITANIC
+	Where age <= 12 and sibsp = 0 and parch = 0
+	GROUP BY ticket
+	HAVING COUNT(*) > 1;
+	
+	26 Einträge
