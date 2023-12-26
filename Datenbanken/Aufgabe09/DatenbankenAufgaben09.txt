@@ -1,0 +1,45 @@
+Aufgabenblatt 09 Datenbanken
+Julian Niethammer
+11.12.2023
+
+
+Nr.1
+
+DDL:
+
+create table fakultat(
+fakultat_id int generated always as identity primary key,
+fakultat_name varchar(50));
+
+create table dozent(
+dozent_id int generated always as identity primary key,
+dozent_name varchar(50) not null,
+fakultat not null references fakultat);
+
+create table vorlesung(
+vorlesung_id int generated always as identity primary key,
+vorlesung_name varchar(50) not null,
+dozent int not null references dozent);
+
+create table student(
+student_id int generated always as identity primary key,
+student_name varchar(50) not null,
+fakultat int references fakultat);
+
+create table vorlesung_student(
+vorlesung int references vorlesung,
+student int references student,
+primary key(vorlesung, student));
+
+
+Data:
+
+insert into fakultät (fakultät_name) values ('IN'), ('IP'), ('HP'), ('ZE'), ('AS'), ('BC'), ('LS'), ('CD')
+
+insert into dozent (dozent_name, fakultat) values ('Scholz', 1), ('Mayer', 1), ('Niethammer', 2), ('Döz', 2), ('Knopf', 3);
+
+insert into vorlesung (vorlesung_name, dozent) values ('Informatik', 3), ('Mathematik', 2), ('Mathematik', 2), ('Englisch', 4)
+
+insert into Student (student_name, fakultat) values ('julian', 1), ('julian', 1), ('jakob', 1), ('Tom', 2)
+
+insert into VORLESUNG_STUDENT values (1,1), (1,2), (3,1), (2,3)

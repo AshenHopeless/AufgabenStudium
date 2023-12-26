@@ -1,0 +1,73 @@
+Aufgabenblatt 07 Datenbanken
+Julian Niethammer
+27.11.2023
+
+Nr.1
+
+a)
+	SELECT * FROM TITANIC 
+	WHERE Ticket IN ('113038', '1601', '21228', 'C 17368', 'A/5 21173', 'A./5. 2152', '54636')
+	
+b)
+	SELECT COUNT(*)
+	FROM Titanic;
+	
+	=1309
+	
+c)
+	SELECT COUNT(survived)
+	FROM Titanic where survived = 1;
+	
+	=500
+	
+	SELECT COUNT(survived)
+	FROM Titanic where survived = 0;
+	
+	=809
+	
+d)
+	SELECT COUNT(*)
+	FROM Titanic where age <= 15;
+	
+	=115
+	
+	SELECT COUNT(*)
+	FROM Titanic where age > 15;
+	
+	=931
+	
+	Es sind mehr Personen als Passagiere bis und über 15, was bedeutet das Altersangaben fehlen
+	
+e)
+	SELECT AVG(age) as "Alters Durchschnitt", MIN(age) as "Kleinstes Alter", MAX(age) as "Höchstes Alter" FROM TITANIC 
+	
+	Alters Durchschnitt  	Kleinstes Alter  	Höchstes Alter  
+	29.89770554493308		0					80
+	
+f)
+	SELECT AVG(case when survived = 1 then age end) as "Durchnittsalter überlebt", AVG(case when survived = 0 then age end) as "Durchschnittsalter Tot"
+	FROM TITANIC;
+	
+g)
+	SELECT distinct(boat) FROM TITANIC
+	WHERE boat not like '% %'
+	
+h)
+	SELECT boat, COUNT(boat) AS "Passagiere" FROM TITANIC
+	WHERE boat not like '% %'
+	GROUP BY boat;
+	
+i)
+	SELECT boat, COUNT(boat) AS "Passagiere" FROM TITANIC
+	WHERE boat not like '% %'
+	GROUP BY boat having COUNT(boat) >= 25;
+	
+j)
+	SELECT name, ticket, fare FROM titanic
+	WHERE ticket in (SELECT ticket FROM titanic
+	GROUP BY ticket HAVING COUNT(*) > 1 AND COUNT(DISTINCT fare) > 1)
+	
+k)
+	SELECT class, COUNT(class) AS "Überlebt" FROM titanic
+	WHERE survived = 1
+	GROUP BY class;
